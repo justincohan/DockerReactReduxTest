@@ -2,62 +2,62 @@ import React from "react";
 import { connect } from "react-redux";
 import { login } from "../../redux/actions";
 import { withRouter } from "react-router-dom";
+import { Form, Button, Input, Icon } from "antd";
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { username: "", password: "" };
-  }
-
-  updateUsername = username => {
-    this.setState({ username });
-  };
-
-  updatePassword = password => {
-    this.setState({ password });
-  };
-
-  handleLogin = () => {
-    this.props.login( {username: this.state.username, password: this.state.password} ).then(result => {
+  handleLogin = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+      }
+    });
+    console.log(this.props.form);
+    this.props.login( {username: this.props.form.getFieldValue('username'), password: this.props.form.getFieldValue('password')} ).then(() => {
       console.log('done');
       this.props.history.push('/todo');
-      //window.location = 'localhost:3000/todo';
     });
   };
 
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
-      <div>
-        <div>
-          <label>
-            Username
-            <input
-              onChange={e => this.updateUsername(e.target.value)}
-              value={this.state.username}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
-            <input
+      <Form onSubmit={this.handleLogin} className="login-form">
+        <Form.Item>
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'Please input your username!' }],
+          })(
+            <Input
+              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              placeholder="Username"
+            />,
+          )}
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Please input your Password!' }],
+          })(
+            <Input
+              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="password"
-              onChange={e => this.updatePassword(e.target.value)}
-              value={this.state.password}
-            />
-          </label>
-        </div>
+              placeholder="Password"
+            />,
+          )}
+        </Form.Item>
 
-        <button onClick={this.handleLogin}>
-          Login
-        </button>
-      </div>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Login
+          </Button>
+      </Form>
     );
   }
 }
 
+const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(Login);
+
+
 export default connect(
   null,
   { login }
-)(withRouter(Login));
+)(withRouter(WrappedNormalLoginForm));
 // export default AddTodo;

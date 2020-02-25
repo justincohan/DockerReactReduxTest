@@ -1,3 +1,4 @@
+import { withRouter } from 'react-router-dom';
 import {
   GET_TODOS,
   POST_LOGIN,
@@ -57,53 +58,6 @@ function receiveGet(json) {
   }
 }
 
-export function toggleTodo(content) {
-  content.completed = !content.completed;
-  return updateTodo(content);
-}
-
-export function updateTodo(content) {
-  return function(dispatch) {
-    dispatch(putTodo());
-    return axios.put(
-      api + content.id + '/',
-      content,
-      { headers: { 'Content-Type': 'application/json', 'Authorization': 'Token' + localStorage.getItem('auth_token') } }
-    ).then(response => {
-      dispatch(receivePut(response.data));
-      return response
-    });
-  }
-}
-
-export function addTodo(content) {
-  return function(dispatch) {
-    dispatch(postTodo());
-
-    return axios.post(
-      api,
-      {content},
-      { headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + localStorage.getItem('auth_token') } }
-    ).then(response => {
-      dispatch(receivePost(response.data));
-      return response
-    });
-  }
-}
-
-export function fetchTodos() {
-  return function(dispatch) {
-    dispatch(getTodos());
-    axios.get(api, { headers: {'Authorization': 'Token ' + localStorage.getItem('auth_token')}})
-      .then(
-        response => response.data,
-        error => console.log('An error occurred.', error)
-      )
-      .then(json =>
-        dispatch(receiveGet(json))
-      )
-  }
-}
 
 function postLogin() {
   return {
@@ -118,12 +72,73 @@ function receiveLogin(json) {
   }
 }
 
+
+function getHeaders() {
+  return { headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + localStorage.getItem('auth_token') } }
+}
+
+function handleError(error) {
+  if (error.response && error.response.status === 401) {
+    localStorage.removeItem("auth_token");
+    this.props.history.push('/login');
+  }
+}
+
+withRouter(handleError);
+
+export function toggleTodo(content) {
+  content.completed = !content.completed;
+  return updateTodo(content);
+}
+
+export function updateTodo(content) {
+  return function(dispatch) {
+    dispatch(putTodo());
+    return axios.put(
+      api + content.id + '/',
+      content,
+      getHeaders()
+    ).then(response => {
+      dispatch(receivePut(response.data));
+      return response
+    }, handleError);
+  }
+}
+
+export function addTodo(content) {
+  return function(dispatch) {
+    dispatch(postTodo());
+
+    return axios.post(
+      api,
+      {content},
+      getHeaders()
+    ).then(response => {
+      dispatch(receivePost(response.data));
+      return response
+    }, handleError);
+  }
+}
+
+export function fetchTodos() {
+  return function(dispatch) {
+    dispatch(getTodos());
+    axios.get(api, getHeaders())
+      .then(
+        response => response.data,
+        handleError
+      )
+      .then(json =>
+        dispatch(receiveGet(json))
+      )
+  }
+}
+
 export function login(details) {
   return function(dispatch) {
     dispatch(postLogin());
     return axios.post('http://127.0.0.1:8000/auth/token/login/', details,
       { headers: { 'Content-Type': 'application/json' } }).then(response => {
-        console.log('response', response);
         localStorage.setItem('auth_token', response.data.auth_token);
         dispatch(receiveLogin());
         return response;

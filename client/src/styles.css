@@ -34,3 +34,10 @@
 .filter--active {
   border-bottom: 1px solid black;
 }
+
+.login-form {
+  max-width: 300px;
+}
+.login-form-button {
+  width: 100%;
+}
