@@ -1,24 +1,23 @@
 import React from "react";
-import { connect } from "react-redux";
+import {useDispatch} from "react-redux";
 import cx from "classnames";
 import {toggleTodo} from "../../redux/actions";
 
-const Todo = ({ todo, toggleTodo }) => (
-  <li className="todo-item" onClick={() => toggleTodo(todo)}>
-    {todo && todo.completed ? "👌" : "👋"}{" "}
-    <span
-      className={cx(
-        "todo-item__text",
-        todo && todo.completed && "todo-item__text--completed"
-      )}
-    >
+const Todo = ({ todo }) => {
+  const dispatch = useDispatch();
+
+  return (
+    <li className="todo-item" onClick={() => dispatch(toggleTodo(todo))}>
+      {todo && todo.completed ? "👌" : "👋"}{" "}
+      <span
+        className={cx(
+          "todo-item__text",
+          todo && todo.completed && "todo-item__text--completed"
+        )}
+      >
       {todo.content}
     </span>
-  </li>
-);
+    </li>)
+};
 
-// export default Todo;
-export default connect(
-  null,
-  { toggleTodo }
-)(Todo);
+export default Todo;

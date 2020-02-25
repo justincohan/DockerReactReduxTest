@@ -10,7 +10,7 @@ import {
   SET_FILTER
 } from "./actionTypes";
 import axios from 'axios';
-
+import {history} from '../MyHistory';
 const api = 'http://127.0.0.1:8000/todo/';
 
 export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
@@ -80,7 +80,7 @@ function getHeaders() {
 function handleError(error) {
   if (error.response && error.response.status === 401) {
     localStorage.removeItem("auth_token");
-    this.props.history.push('/login');
+    history.push('/login');
   }
 }
 

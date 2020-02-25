@@ -10,19 +10,20 @@ import store from "./redux/store";
 import TodoApp from "./TodoApp";
 
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
 import LoginApp from "./LoginApp";
 import PrivateRoute from "./PrivateRoute";
+import {history} from "./MyHistory";
 
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <Router history={history}>
     <Switch>
       <PrivateRoute path="/todo">
         <TodoApp />
