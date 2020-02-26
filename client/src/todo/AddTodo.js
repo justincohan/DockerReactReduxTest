@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../redux/actions";
+import { addTodo } from "./todoActions";
 
 export default function AddTodo() {
   const [ todo, setTodo ] = React.useState('');

@@ -1,21 +1,11 @@
 import {
-  GET_TODOS,
-  POST_LOGIN,
+  GET_TODOS, initialState,
   POST_TODO,
   PUT_TODO,
   RECEIVE_GET,
-  RECEIVE_LOGIN,
   RECEIVE_POST,
-  RECEIVE_PUT
-} from "../actionTypes";
-
-const initialState = {
-  isFetching: true,
-  didInvalidate: false,
-  allIds: [],
-  byIds: {}
-};
-console.log('initial', initialState);
+  RECEIVE_PUT,
+} from "../constants";
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -45,6 +35,7 @@ export default function (state = initialState, action) {
       const {id} = action.payload;
       return {
         ...state,
+        isFetching: false,
         byIds: {
           ...state.byIds,
           [id]: action.payload
@@ -69,18 +60,6 @@ export default function (state = initialState, action) {
           }
         }
       });
-    }
-
-
-
-    case POST_LOGIN: {
-      return Object.assign({}, state, {
-        isFetching: true
-      });
-    }
-    case RECEIVE_LOGIN: {
-      console.log(action);
-      return Object.assign({}, state, {});
     }
 
     default:

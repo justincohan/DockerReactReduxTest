@@ -1,10 +1,10 @@
 import React from "react";
-import AddTodo from "./components/todo/AddTodo";
-import TodoList from "./components/todo/TodoList";
-import VisibilityFilters from "./components/todo/VisibilityFilters";
-import "./styles.css";
-import {fetchTodos} from "./redux/actions";
-import store from "./redux/store";
+import AddTodo from "./AddTodo";
+import TodoList from "./TodoList";
+import VisibilityFilters from "./VisibilityFilters";
+import "../styles.css";
+import {fetchTodos} from "./todoActions";
+import store from "../store";
 
 export default function TodoApp() {
   React.useEffect(() => {

@@ -1,7 +1,7 @@
 import React from "react";
 import {useDispatch} from "react-redux";
 import cx from "classnames";
-import {toggleTodo} from "../../redux/actions";
+import {toggleTodo} from "./todoActions";
 
 const Todo = ({ todo }) => {
   const dispatch = useDispatch();

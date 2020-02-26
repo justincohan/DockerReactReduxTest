@@ -5,9 +5,9 @@ import "./styles.css";
 
 
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import store from "./store";
 
-import TodoApp from "./TodoApp";
+import TodoApp from "./todo/TodoApp";
 
 import {
   Router,
@@ -15,9 +15,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import LoginApp from "./LoginApp";
+import LoginApp from "./login/LoginApp";
 import PrivateRoute from "./PrivateRoute";
 import {history} from "./MyHistory";
+import RegisterApp from "./register/RegisterApp";
+import {logout} from "./actions";
 
 
 const rootElement = document.getElementById("root");
@@ -31,13 +33,22 @@ ReactDOM.render(
       <Route path="/login">
         <LoginApp />
       </Route>
+      <Route path="/register">
+        <RegisterApp />
+      </Route>
       <Route>
         I'm the home page
+        <div>
+          <Link to="/register">Register</Link>
+        </div>
         <div>
           <Link to="/todo">Todo</Link>
         </div>
         <div>
           <Link to="/login">Login</Link>
+        </div>
+        <div>
+          <button onClick={logout}>Logout</button>
         </div>
       </Route>
     </Switch>

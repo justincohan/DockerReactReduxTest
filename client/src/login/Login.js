@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux";
 import { Form, Button, Input } from "antd";
 import Icon from "antd/es/icon";
 import { useHistory } from "react-router-dom";
-import {login} from "../../redux/actions";
+import {login} from "./loginActions";
 
 
 function Login() {

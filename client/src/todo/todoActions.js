@@ -1,16 +1,6 @@
-import { withRouter } from 'react-router-dom';
-import {
-  GET_TODOS,
-  POST_LOGIN,
-  POST_TODO,
-  PUT_TODO,
-  RECEIVE_GET, RECEIVE_LOGIN,
-  RECEIVE_POST,
-  RECEIVE_PUT,
-  SET_FILTER
-} from "./actionTypes";
+import {GET_TODOS, POST_TODO, PUT_TODO, RECEIVE_GET, RECEIVE_POST, RECEIVE_PUT, SET_FILTER} from "../constants";
 import axios from 'axios';
-import {history} from '../MyHistory';
+import {getHeaders, handleError} from "../actions";
 const api = 'http://127.0.0.1:8000/todo/';
 
 export const setFilter = filter => ({ type: SET_FILTER, payload: { filter } });
@@ -58,34 +48,6 @@ function receiveGet(json) {
   }
 }
 
-
-function postLogin() {
-  return {
-    type: POST_LOGIN
-  }
-}
-
-function receiveLogin(json) {
-  return {
-    type: RECEIVE_LOGIN,
-    payload: json
-  }
-}
-
-
-function getHeaders() {
-  return { headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + localStorage.getItem('auth_token') } }
-}
-
-function handleError(error) {
-  if (error.response && error.response.status === 401) {
-    localStorage.removeItem("auth_token");
-    history.push('/login');
-  }
-}
-
-withRouter(handleError);
-
 export function toggleTodo(content) {
   content.completed = !content.completed;
   return updateTodo(content);
@@ -131,17 +93,5 @@ export function fetchTodos() {
       .then(json =>
         dispatch(receiveGet(json))
       )
-  }
-}
-
-export function login(details) {
-  return function(dispatch) {
-    dispatch(postLogin());
-    return axios.post('http://127.0.0.1:8000/auth/token/login/', details,
-      { headers: { 'Content-Type': 'application/json' } }).then(response => {
-        localStorage.setItem('auth_token', response.data.auth_token);
-        dispatch(receiveLogin());
-        return response;
-    })
   }
 }

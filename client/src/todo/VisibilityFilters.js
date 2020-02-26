@@ -1,8 +1,8 @@
 import React from "react";
 import cx from "classnames";
 import {useDispatch, useSelector} from "react-redux";
-import { setFilter } from "../../redux/actions";
-import { VISIBILITY_FILTERS } from "../../constants";
+import { setFilter } from "./todoActions";
+import { VISIBILITY_FILTERS } from "../constants";
 
 const VisibilityFilters = () => {
   const dispatch = useDispatch();
