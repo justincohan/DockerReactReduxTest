@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {history} from './MyHistory';
+import {history} from './myHistory';
 
 export const getHeaders = function getHeaders() {
   return { headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + localStorage.getItem('auth_token') } }

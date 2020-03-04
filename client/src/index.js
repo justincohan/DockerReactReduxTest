@@ -17,7 +17,7 @@ import {
 } from "react-router-dom";
 import LoginApp from "./login/LoginApp";
 import PrivateRoute from "./PrivateRoute";
-import {history} from "./MyHistory";
+import {history} from "./myHistory";
 import RegisterApp from "./register/RegisterApp";
 import {logout} from "./actions";
 
