@@ -67,28 +67,27 @@ class TodoTests(APITestCase):
     def role_test(self, rule):
         todo = Todo.objects.create(content="goodtest")
         print(vars(todo))
-        if True:
-            rule['login'](self.client)
 
-            # Add todo
-            response = self.client.post('/todo/', {'content': 'goodtest'})
-            content = json.loads(response.content)
-            self.assertEqual(response.status_code, rule['add'])
+        rule['login'](self.client)
 
-            # Get todo
-            todo_id = todo.id
-            response = self.client.get('/todo/' + str(todo_id) + '/', format='json')
-            self.assertEqual(response.status_code, rule['read'])
+        # Add todo
+        response = self.client.post('/todo/', {'content': 'goodtest'})
+        self.assertEqual(response.status_code, rule['add'])
 
-            # Update todo
-            response = self.client.put('/todo/' + str(todo_id) + '/', {'content': 'changed'}, format='json')
-            self.assertEqual(response.status_code, rule['put'])
+        # Get todo
+        todo_id = todo.id
+        response = self.client.get('/todo/' + str(todo_id) + '/')
+        self.assertEqual(response.status_code, rule['read'])
 
-            # Delete todo
-            response = self.client.delete('/todo/' + str(todo_id) + '/', format='json')
-            self.assertEqual(response.status_code, rule['delete'])
+        # Update todo
+        response = self.client.put('/todo/' + str(todo_id) + '/', {'content': 'changed'})
+        self.assertEqual(response.status_code, rule['put'])
 
-            # List todo
-            response = self.client.get('/todo/', format='json')
-            self.assertEqual(response.status_code,  rule['read'])
+        # Delete todo
+        response = self.client.delete('/todo/' + str(todo_id) + '/')
+        self.assertEqual(response.status_code, rule['delete'])
+
+        # List todo
+        response = self.client.get('/todo/')
+        self.assertEqual(response.status_code,  rule['read'])
 
