@@ -20,6 +20,7 @@ import PrivateRoute from "./PrivateRoute";
 import {history} from "./myHistory";
 import RegisterApp from "./register/RegisterApp";
 import {logout} from "./actions";
+import ScheduleApp from "./schedule/ScheduleApp";
 
 
 const rootElement = document.getElementById("root");
@@ -36,6 +37,9 @@ ReactDOM.render(
       <Route path="/register">
         <RegisterApp />
       </Route>
+      <Route path="/schedule">
+        <ScheduleApp />
+      </Route>
       <Route>
         I'm the home page
         <div>
@@ -46,6 +50,9 @@ ReactDOM.render(
         </div>
         <div>
           <Link to="/login">Login</Link>
+        </div>
+        <div>
+          <Link to="/schedule">Schedule</Link>
         </div>
         <div>
           <button onClick={logout}>Logout</button>

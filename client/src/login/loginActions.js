@@ -19,7 +19,8 @@ export function login(details) {
     dispatch(postLogin());
     return axios.post('http://127.0.0.1:8000/auth/token/login/', details,
       { headers: { 'Content-Type': 'application/json' } }).then(response => {
-      localStorage.setItem('auth_token', response.data.auth_token);
+        console.log(response);
+      localStorage.setItem('authToken', response.data.authToken);
       dispatch(receiveLogin());
       return response;
     })

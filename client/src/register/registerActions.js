@@ -19,7 +19,7 @@ export function register(details) {
     dispatch(postRegister());
     return axios.post('http://127.0.0.1:8000/auth/users/', details,
       { headers: { 'Content-Type': 'application/json' } }).then(response => {
-      localStorage.setItem('auth_token', response.data.auth_token);
+      localStorage.setItem('authToken', response.data.authToken);
       dispatch(receiveRegister());
       return response;
     })

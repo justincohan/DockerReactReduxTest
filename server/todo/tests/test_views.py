@@ -1,10 +1,10 @@
 import json
 
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.models import Group, Permission
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from ..models import Todo
+from ..models import Todo, User
 
 
 def login(client, name):
@@ -12,7 +12,7 @@ def login(client, name):
     user.groups.set([Group.objects.get(name=name)])
     user.save()
 
-    #client.post('/auth/users/', {'username': 'admin', 'password': 'TestPassword1!'})
+    client.post('/auth/users/', {'username': 'admin', 'password': 'TestPassword1!'})
     response = client.post('/auth/token/login/', {'username': 'admin', 'password': 'TestPassword1!'})
     client.credentials(HTTP_AUTHORIZATION='Token ' + json.loads(response.content)['auth_token'])
 

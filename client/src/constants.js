@@ -4,6 +4,12 @@ export const VISIBILITY_FILTERS = {
   INCOMPLETE: "incomplete"
 };
 
+export const SEARCH_COACHES = "SEARCH_COACHES";
+export const GET_COACHES = "GET_COACHES";
+export const RECEIVE_COACHES = "RECEIVE_COACHES";
+export const SEARCH_PERSONS = "SEARCH_PERSONS";
+export const GET_PERSONS = "GET_PERSONS";
+export const RECEIVE_PERSONS = "RECEIVE_PERSONS";
 export const SET_FILTER = "SET_FILTER";
 export const PUT_TODO = 'PUT_TODO';
 export const RECEIVE_PUT = 'RECEIVE_PUT';
